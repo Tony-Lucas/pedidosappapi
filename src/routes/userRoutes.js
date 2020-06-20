@@ -24,7 +24,7 @@ router.post('/login',async(req,res) => {
         const user = await User.findOne({email:req.body.email});
         if(user && bcrypt.compareSync(req.body.senha,user.senha)){
             const token = jwt.sign({id:user.id,email:user.email},"MinhaChaveSecreta",{expiresIn:"1h"});
-            res.json({success:true,token:token});
+            res.json({success:true,token:token,idUsuario:user._id});
         }else{
             res.json({success:false,message:"Usuario ou senha invalidos"})
         }
